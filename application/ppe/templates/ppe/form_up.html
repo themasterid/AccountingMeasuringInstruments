@@ -1,0 +1,268 @@
+<form 
+	method="get"
+	onclick="selectForm()"
+    id="divisionForm"
+    class="select-field"
+    data-d1-url="{% url 'ajax_load_division_one' %}"
+    data-d2-url="{% url 'ajax_load_division_two' %}">
+	{% csrf_token %}
+<div class="card p-1 mb-2 bg-light rounded shadow-sm h-100" style="width: 100%">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+				<div class="input-group mb-3">
+				<label class="input-group-text" for="division1">СП 1-го уровня</label>
+				<select class="form-select" id="division1">
+                    {% include 'ppe/division/sp1.html' %}
+                </select>
+				</div>
+            </div>
+            <div class="col">
+				<div class="input-group mb-3">
+				<label class="input-group-text" for="division2">СП 2-го уровня</label>
+                <select class="form-select" id="division2">
+                    {% include 'ppe/division/sp2.html' %}
+                </select>
+				</div>
+            </div>
+            <div class="col">
+				<div class="input-group mb-3">
+				<label class="input-group-text" for="division3">СП 3-го уровня</label>
+                <select class="form-select" id="division3" selected="false">
+					{% include 'ppe/division/sp3.html' %}
+                </select>
+				</div>
+            </div>
+            <div class="col">
+                <div id="number_team_members">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text">Кол-во чл. бригады</label>
+                        <input class="form-control" type="number">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="responsible_accounting_ppe">
+        <div class="row">
+            <div class="col">
+                <div class="input-group mb-3">
+                    <label class="input-group-text">Ответственный за учет СИЗ</label>
+                    <input class="form-control" type="text">
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group mb-3">
+                    <label class="input-group-text">Должность</label>
+                    <input class="form-control" type="text">
+                </div>
+            </div>
+        </div>
+        </div>
+        <div id="complete_set">
+            <div class="input-group mb-3">
+                <label class="input-group-text">Комплект</label>
+                <input class="form-control" type="text">
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+{% include 'ppe/modal.html' %}
+
+{% block script %}
+<script>
+    $("#division1").change(function () {
+        const url = $("#divisionForm").attr("data-d1-url");
+        const division_oneId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'division1': division_oneId
+            },
+            success: function (data) {
+                $("#division2").html(data);
+            },
+        });
+    });
+</script>
+
+<script>
+    $("#division2").change(function () {
+        const url = $("#divisionForm").attr("data-d2-url");
+        const division_twoId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'division2': division_twoId
+            },
+            success: function (data) {
+                $("#division3").html(data);
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#division2").change(function(e){
+			e.preventDefault();
+			let division2 = $(this).val();
+			let data = {division2};
+			$.ajax({
+				type : 'GET',
+				url :  "{% url 'get_division_info2' %}",
+				data : data,
+				success : function(response){
+					$("#number_team_members").html(`
+						<div class="input-group mb-3">
+							<label class="input-group-text">
+								Кол-во чл. бригады
+							</label>
+							<input class="form-control" type="number" value="${response.user_info.number_team_members || "-"}">
+						</div>`),
+					$("#responsible_accounting_ppe").html(`						
+						<div class="row">
+						<div class="col">
+							<div class="input-group mb-3">
+								<label class="input-group-text">
+									Ответственный за учет СИЗ
+								</label>
+								<input class="form-control" type="text" value="${response.user_info.responsible_accounting_ppe || "-"}">
+							</div>
+						</div>
+						<div class="col">
+							<div class="input-group mb-3">
+								<label class="input-group-text">
+									Должность
+								</label>
+								<input class="form-control" type="text" value="${response.user_info.position || "-"}">
+							</div>
+						</div>
+						</div>`),
+						$("#complete_set").html(`						
+						<div class="input-group mb-3">
+							<label class="input-group-text">
+								Комплект
+							</label>
+							<input class="form-control" type="text" value="${response.user_info.complete_set || "-"}">
+						</div>`)
+				},
+				error : function(response){
+					console.log(response)
+				}
+			})
+		})
+	})
+</script>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#division3").change(function(e){
+			e.preventDefault();
+			let division3 = $(this).val();
+			let data = {division3};
+			$.ajax({
+				type : 'GET',
+				url :  "{% url 'get_division_info3' %}",
+				data : data,
+				success : function(response){
+					$("#number_team_members").html(`
+						<div class="input-group mb-3">
+							<label class="input-group-text">
+								Кол-во чл. бригады
+							</label>
+							<input class="form-control" type="number" value="${response.user_info.number_team_members || "-"}">
+						</div>`),
+					$("#responsible_accounting_ppe").html(`						
+						<div class="row">
+						<div class="col">
+							<div class="input-group mb-3">
+								<label class="input-group-text">
+									Ответственный за учет СИЗ
+								</label>
+								<input class="form-control" type="text" value="${response.user_info.responsible_accounting_ppe || "-"}">
+							</div>
+						</div>
+						<div class="col">
+							<div class="input-group mb-3">
+								<label class="input-group-text">
+									Должность
+								</label>
+								<input class="form-control" type="text" value="${response.user_info.position || "-"}">
+							</div>
+						</div>
+						</div>`),
+						$("#complete_set").html(`						
+						<div class="input-group mb-3">
+							<label class="input-group-text">
+								Комплект
+							</label>
+							<input class="form-control" type="text" value="${response.user_info.complete_set || "-"}">
+						</div>`)
+				},
+				error : function(response){
+					console.log(response)
+				}
+			})
+		})
+	})
+</script>
+
+
+<!-- Запомнить состояние Select -->
+<script type="text/javascript">
+	// document.addEventListener("DOMContentLoaded", function() {
+	// 	let item1 = localStorage.getItem('division1');
+	// 	let item2 = localStorage.getItem('division2');
+	// 	let item3 = localStorage.getItem('division3');
+
+	// 	let select1 = document.getElementById("division1");
+	// 	let select2 = document.getElementById("division2");
+	// 	let select3 = document.getElementById("division3");
+
+	// 	select1.value = item1;
+	// 	select2.value = item2;
+	// 	select3.value = item3;
+	// 	console.log(select1.value);
+	// });
+	// function selectForm(){
+	// 	let select1 = document.getElementById("division1");
+	// 	let select2 = document.getElementById("division2");
+	// 	let select3 = document.getElementById("division3");
+	// 	let value1 = select1.options[select1.selectedIndex].value;
+	// 	let value2 = select2.options[select2.selectedIndex].value;
+	// 	let value3 = select3.options[select3.selectedIndex].value;
+	// 	localStorage.setItem('division1', value1);
+	// 	localStorage.setItem('division2', value2);
+	// 	localStorage.setItem('division3', value3);
+	// }
+	document.getElementById('division1').onchange = function(){
+        localStorage['division1'] = this.value;
+    };
+	document.getElementById('division2').onchange = function(){
+        localStorage['division2'] = this.value;
+    };
+	document.getElementById('division3').onchange = function(){
+        localStorage['division3'] = this.value;
+    };
+    if(localStorage['division1']){
+        const a = document.getElementById("division1").options[
+			localStorage['division1']
+		].selected = true;
+    }
+	if(localStorage['division2']){
+        document.getElementById("division2").options[
+			localStorage['division2']
+		].selected = true;
+    }
+	if(localStorage['division3']){
+        document.getElementById("division3").options[
+			localStorage['division3']
+		].selected = true;
+    }
+</script>
+{% endblock %}

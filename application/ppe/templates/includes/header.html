@@ -1,0 +1,24 @@
+<header>
+    <nav class="navbar navbar-light style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img
+                src="https://static.tildacdn.com/tild3065-6533-4031-a430-333234356465/horizontal_tagline_o.png"
+                alt="IAS_Control"
+                width="10%"
+                height="10%"
+                class="d-inline-block">
+                <span class="navbar-text">
+                        Дата изменения ({% now 'd.m.Y' %}) |
+                        <strong>
+                        {% if user.username %}
+                        Пользователь: {{ user.get_full_name }}
+                        {% else %}
+                        Пользователь: Гость
+                        {% endif %}
+                        </strong>
+                </span>
+            </a>
+        </div>
+    </nav>
+</header>

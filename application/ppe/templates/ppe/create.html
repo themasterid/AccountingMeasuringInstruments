@@ -1,0 +1,87 @@
+<div class="card p-1 mb-2 bg-light rounded shadow-sm" style="width: 100%">
+    <div class="card-body">
+    <form method="post"
+        {% if is_edit %} 
+        action="{% url 'ppe:edit' material_id.id %}" 
+        {% else %}
+        action="{% url 'ppe:create' %}"
+        {% endif %}}>
+        {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-sm-2">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" id="basic-addon1">Номер в SAP</label>
+                        {{ form_materials.number_sap }}
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" id="basic-addon1">Материал</label>
+                        {{ form_materials.material }}
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text">Краткий текст</label>
+                        {{ form_materials.material_text }}
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text">Количество</label>
+                        {{ form_materials.quantity }}
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mb-3" id="datetimepicker1">
+                        <label class="input-group-text">Дата ввода в эксплуатацию</label>
+                        {{ form_materials.date_commissioning }}
+                    </div>
+                    <div class="input-group mb-3" id="datetimepicker1">
+                        <label class="input-group-text">Дата окончания срока службы</label>
+                        {{ form_materials.end_of_service_date }}
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text">Завод изготовитель</label>
+                        {{ form_materials.manufacturer }}
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mb-3" id="datetimepicker1">
+                        <label class="input-group-text">Срок службы (лет)</label>
+                        {{ form_materials.expiration_date }}
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text">Инв. №</label>
+                        {{ form_materials.inventory_number }}  
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text">Дата осмотра</label>
+                        {{ form_materials.date_of_inspection }}
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mb-3" id="datetimepicker1">
+                        <label class="input-group-text">Дата испытания</label>
+                        {{ form_materials.test_date }}
+                    </div>
+                    <div class="input-group mb-3" id="datetimepicker1">
+                        <label class="input-group-text">Дата следующего испытания</label>
+                        {{ form_materials.date_next_testst }}
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text">Дата следующего осмотра</label>
+                        {{ form_materials.date_next_inspection }}
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text">Результат испытания</label>
+                        {{ form_materials.test_result }}
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text">Результат осмотра</label>
+                        {{ form_materials.inspection_result }}
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary">{% if is_edit %}Редактировать{% else %}Добавить{% endif %}</button>
+                </div>
+            </div>
+    </form>
+    </div>
+</div>

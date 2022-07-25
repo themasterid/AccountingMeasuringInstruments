@@ -1,0 +1,48 @@
+<div class="card p-1 mb-3 bg-light rounded shadow-sm" style="width: 100%">
+    <div class="card-body">
+        <table id="bootstrapdatatable" class="table table-striped" width="100%">
+            <thead>
+                <th>Номер в SAP</th>
+                <th>Материал</th>
+                <th>Краткий текст материала</th>
+                <th>Кол-во</th>
+                <th>Завод изготовитель</th>
+                <th>Инвент.<br>№</th>
+                <th>Дата<br>испытания</th>
+                <th>Результат<br>испытания</th>
+                <th>Дата след.<br>испытания</th>
+                <th>Дата<br>ввода в эксплуатацию</th>
+                <th>Срок<br>службы</th>
+                <th>Дата оконч.<br>срока службы</th>
+                <th>Дата след.<br>осмотра</th>
+                <th>Результат<br>осмотра</th>
+                <th>Логин<br>блокировки</th>
+                <th>Дата блокировки</th>
+                <th>Группа</th>
+            </thead>
+            <tbody>
+            {% for material in materials %}  
+            <tr>  
+                <td>{{ material.id }}</td>
+                <td>{{ material.material }}</td>
+                <td>{{ material.material_text }}</td>
+                <td>{{ material.quantity }}</td>
+                <td>{{ material.manufacturer }}</td>
+                <td>{{ material.inventory_number }}</td>
+                <td>{% if material.test_date %}{{ material.test_date }}{% else %}{% endif %}</td>
+                <td>{% if material.test_result %}{{ material.test_result }}{% else %}{% endif %}</td>
+                <td>{{ material.date_next_testst }}</td>
+                <td>{{ material.date_commissioning }}</td>
+                <td>{{ material.expiration_date }}</td>
+                <td>{{ material.end_of_service_date }}</td>
+                <td>{{ material.date_next_inspection }}</td>
+                <td>{{ material.inspection_result }}</td>
+                <td>{% if material.login_of_block %}{{ material.login_of_block }}{% else %}{% endif %}</td>
+                <td>{% if material.date_of_block %}{{ material.date_of_block }}{% else %}{% endif %}</td>
+                <td>{{ material.group.name }}</td>
+            </tr>  
+            {% endfor %} 
+            </tbody>
+        </table>
+    </div>
+</div>

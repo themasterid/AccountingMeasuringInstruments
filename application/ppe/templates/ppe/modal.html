@@ -1,0 +1,231 @@
+
+<div class="modal" id="TheModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Справочник</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <a class="btn btn-outline-primary"
+                    href="#TheModal1"
+                    role="button"
+                    title="Справочник по материалам"
+                    data-bs-content="..."
+                    data-bs-toggle="modal">Материалы</a>
+                    <a class="btn btn-outline-primary"
+                    href="#TheModal2"
+                    role="button"
+                    title="Справочник по подразделениям"
+                    data-bs-content="..."
+                    data-bs-toggle="modal">Подразделения</a>
+                    <a class="btn btn-outline-primary"
+                    href="#TheModal3"
+                    role="button"
+                    title="Справочник по заводам изготовителям"
+                    data-bs-content="..."
+                    data-bs-toggle="modal">Заводы изготовители</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-bs-dismiss="modal" class="btn">Закрыть</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="TheModal1">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="TheModalLabel1">Материалы</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-responsive table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col-sm-2">Материал</th>
+                            <th scope="col-sm-2">Кол-во. (добавить вывод)</th>
+                            <th scope="col-sm-2">Ед. изм.</th>
+                        </tr>
+                    </thead>
+                    {% for items in materials_all %}
+                    <tr>
+                        <td>{{ items.NameMaterialGr }}</td>
+                        <td>1</td>
+                        <td>{% if items.IdEdIzm == '1' %}шт.{% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="modal-footer">
+                <a data-bs-toggle="modal" href="#TheModal11" class="btn btn-primary">Нормативы</a>
+                <a data-bs-toggle="modal" href="#TheModal12" class="btn btn-primary">Материалы в системе</a>
+                <a href="#" data-bs-dismiss="modal" class="btn btn-primary">Закрыть</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="TheModal11">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Нормативы материалов по комплектам</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="container"></div>
+            <div class="modal-body">
+                <table class="table table-bordered table-responsive table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">№ компл</th>
+                            <th scope="col">Наименование комплекта</th>
+                            <th scope="col">Материал</th>
+                            <th scope="col">Кол-во</th>
+                            <th scope="col">Правило</th>
+                            <th scope="col">Напряж-е</th>
+                        </tr>
+                    </thead>
+                    {% for items in TbComplect_all %}
+                    <tr>
+                        <td>{{ items.NumberCompl }}</td>
+                        <td>{{ items.NameCompl }}</td>
+                        <td>ADD</td>
+                        <td>ADD</td>
+                        <td>ADD</td>
+                        <td>ADD</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-bs-dismiss="modal" class="btn">Закрыть</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="TheModal12">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Материалы в системе</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="container"></div>
+            <div class="modal-body">
+                <table class="table table-bordered table-responsive table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Материал</th>
+                            <th scope="col">Краткий текст материала</th>
+                            <th scope="col">№ в системе</th>
+                            <th scope="col">Срок службы, лет</th>
+                            <th scope="col">План исп., мес.</th>
+                            <th scope="col">Признак испытания, v[да]</th>
+                            <th scope="col">Наименование универсальности</th>
+                            <th scope="col">Признак универсальности, v[да]</th>
+                            <th scope="col">Признак кол-ва, v[да]</th>
+                        </tr>
+                    </thead>
+                    {% for items in tbmaterial_all %}
+                    <tr>
+                        <td>{{ items.IdMaterialGr }}</td>
+                        <td>{{ items.NameMaterSap }}</td>
+                        <td style="text-align:center;">{% if items.NomSap != 'None' %}{{ items.NomSap }}{% endif %}</td>
+                        <td style="text-align:center;">{% if items.SrokSlGod != 'None' %}{{ items.SrokSlGod }}{% endif %}</td>
+                        <td style="text-align:center;">{% if items.PlanIspMes != 'None' %}{{ items.PlanIspMes }}{% endif %}</td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" value="{{ items.PriznIsp }}" {% if items.PriznIsp == 1 %}checked{% endif %}>
+                        </td>
+                        <td>{% if items.NameMaterUn != 'None' %}{{ items.NameMaterUn }}{% endif %}</td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" value="{{ items.PriznUn }}" {% if items.PriznUn == 1 %}checked{% endif %}>
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" value="{{ items.PriznKol }}" {% if items.PriznKol == 1 %}checked{% endif %}>
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-bs-dismiss="modal" class="btn btn-primary">Закрыть</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="TheModal2">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Подразделения</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-responsive table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">СП 1-го уровня</th>
+                            <th scope="col">СП 2-го уровня</th>
+                            <th scope="col">СП 3-го уровня</th>
+                            <th scope="col">№ перечня</th>
+                            <th scope="col">Ответственный</th>
+                            <th scope="col">КолЧлБриг</th>
+                        </tr>
+                    </thead>
+                    {% for items in tbpodr_all %}
+                    <tr>
+                        <td>{{ items.NamePodrazd1 }}</td>
+                        <td>{{ items.NamePodrazd2 }}</td>
+                        <td>{{ items.NamePodrazd3 }}</td>
+                        <td>--- Пусто ---</td>
+                        <td>--- Пусто ---</td>
+                        <td>--- Пусто ---</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-bs-dismiss="modal" class="btn" btn-primary>Закрыть</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="TheModal3">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Наименование заводов-изготовителей</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Наименование<br>завода-изготовителя</th>
+                            <th scope="col">Признак<br>(v-нет поставок)</th>
+                        </tr>
+                        </thead>
+                    {% for items in tbzavod_all %}
+                    <tr>
+                        <td>{{ items.Name_zavod }}</td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" value="{{ items.Prizn_zav }}" {% if items.Prizn_zav == 1 %}checked{% endif %}>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </table>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-bs-dismiss="modal" class="btn">Закрыть</a>
+            </div>
+        </div>
+    </div>
+</div>

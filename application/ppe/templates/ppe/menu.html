@@ -1,0 +1,19 @@
+<div class="card p-1 mb-2 bg-light rounded shadow-sm" style="width: 100%">
+    <div class="card-body">
+        <span><a href="{% url 'ppe:create' %}" class="btn btn-primary">Добавить</a></span>
+        <span><a id="edit_url" class="btn btn-primary">Изменить</a></span>
+        <span><a id="delete_url" class="btn btn-primary">Удалить</a></span>
+        <span><a href="/" class="btn btn-primary">Переместить</a></span>
+        <span><a href="/" class="btn btn-primary">Выбытие</a></span>
+        |
+        <span><a id="removelock_url" class="btn btn-success">Снять блокировку</a></span>
+        
+        <span><a href="{% url 'ppe:index' %}" class="btn btn-primary">Обновить</a></span>
+        
+        {% if user.is_authenticated %}
+            <span><a href="{% url 'ppe:logout' %}" class="btn btn-primary">Выйти</a></span>
+        {% else %}
+            <span><a href="{% url 'ppe:login' %}" class="btn btn-primary">Войти</a></span>
+        {% endif %}
+    </div>
+</div>
